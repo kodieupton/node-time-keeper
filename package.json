@@ -1,0 +1,27 @@
+{
+  "name": "time-keeper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "clear": "^0.1.0",
+    "dotenv": "^8.2.0",
+    "jira-client": "^6.21.1",
+    "luxon": "^1.25.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kodieupton/node-time-keeper.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kodieupton/node-time-keeper/issues"
+  },
+  "homepage": "https://github.com/kodieupton/node-time-keeper#readme"
+}
