@@ -23,7 +23,7 @@ const run = async () => {
             return false;
         }
         
-        return !tags || !tags.includes('Tracked');
+        return !tags || (!tags.includes('Tracked') && !tags.includes('Not Sync'));
     });
 
     if(nonTracked.length === 0) {
@@ -62,15 +62,14 @@ const run = async () => {
         return false;
     }
 
-    timeEntriesToTrack.forEach(async ({issueNumber, description, duration, start}) => {
+    timeEntriesToTrack.forEach(async ({togglId, issueNumber, description, duration, start}) => {
         try {
             await jira.addWorklog(issueNumber, duration, description, start);    
+            await toggl.updateTag(togglId);
         } catch (err) {
             console.error(err);
         }
     });
-
-    console.log(timeEntriesToTrack);
 };
 
 run();
