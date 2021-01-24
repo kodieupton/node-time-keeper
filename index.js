@@ -33,6 +33,8 @@ const run = async () => {
     }
 
     const nonTracked = togglEntries.filter(({tags, description}) => {
+        if(!description) return false;
+        
         const issueNumber = extract(description);
 
         if(!jira.validIssueNumber(issueNumber)) {
