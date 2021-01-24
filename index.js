@@ -11,7 +11,22 @@ const convert = require('convert-seconds');
 clear();
 
 const run = async () => {
-    const togglEntries = await toggl.getToday();
+    let togglEntries = [];
+    const whatToTrack = await inquirer.whatToTrack();
+
+    switch (whatToTrack.whatToTrack) {
+        case 'today':
+            togglEntries = await toggl.getToday();
+            break;
+
+        case 'yesterday':
+            togglEntries = await toggl.getYesterday();
+            break;
+
+        case 'week':
+            togglEntries = await toggl.getCurrentWeek();
+            break;
+    }
 
     if(togglEntries.length === 0) {
         return false;
