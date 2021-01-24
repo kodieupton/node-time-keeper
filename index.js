@@ -5,6 +5,7 @@ const jira  = require('./lib/jira');
 const toggl  = require('./lib/toggl');
 const inquirer  = require('./lib/inquirer');
 const { DateTime } = require("luxon");
+const convert = require('convert-seconds');
 
 
 clear();
@@ -66,6 +67,11 @@ const run = async () => {
         try {
             await jira.addWorklog(issueNumber, duration, description, start);    
             await toggl.updateTag(togglId);
+
+            const issue = await jira.getIssue(issueNumber);
+            const hasComponents = issue.fields.components.length === 0 ? 'needs component assigned.' : '';
+
+            console.log(`${issueNumber} tracked ${convertFromSeconds(duration)} ${hasComponents}`);
         } catch (err) {
             console.error(err);
         }
@@ -83,4 +89,23 @@ function changeOffset(dateTime) {
     const split = dateTime.split('+');
     split[1] = split[1].replace(':', '');
     return split.join('+');
+}
+
+function convertFromSeconds(seconds) {
+    const readable = convert(seconds);
+    let formattedTime = '';
+
+    if(readable.hours > 0) {
+        formattedTime += `${readable.hours}h`;
+    }
+
+    if(readable.minutes > 0) {
+        if(formattedTime !== ''){
+            formattedTime += ', ';
+        }
+
+        formattedTime += `${readable.minutes}m`;
+    }
+
+    return formattedTime;
 }
