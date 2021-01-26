@@ -4,9 +4,9 @@ const clear = require('clear');
 const jira  = require('./lib/jira');
 const toggl  = require('./lib/toggl');
 const inquirer  = require('./lib/inquirer');
+const { extract, changeOffset, convertFromSeconds, sleep } = require('./util');
 const { DateTime } = require("luxon");
-const convert = require('convert-seconds');
-
+const cliProgress = require('cli-progress');
 
 clear();
 
@@ -80,6 +80,10 @@ const run = async () => {
         return false;
     }
 
+    const progress = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+
+    progress.start(timeEntriesToTrack.length, 0);
+
     timeEntriesToTrack.forEach(async ({togglId, issueNumber, description, duration, start}) => {
         try {
             await jira.addWorklog(issueNumber, duration, description, start);    
@@ -92,37 +96,12 @@ const run = async () => {
         } catch (err) {
             console.error(err);
         }
+
+        await sleep(1000);
+        progress.increment();
     });
+
+    progress.stop();
 };
 
 run();
-
-function extract(name) {
-    const split = name.split('-').slice(0, 2);
-    return split.join('-').trim();
-}
-
-function changeOffset(dateTime) {
-    const split = dateTime.split('+');
-    split[1] = split[1].replace(':', '');
-    return split.join('+');
-}
-
-function convertFromSeconds(seconds) {
-    const readable = convert(seconds);
-    let formattedTime = '';
-
-    if(readable.hours > 0) {
-        formattedTime += `${readable.hours}h`;
-    }
-
-    if(readable.minutes > 0) {
-        if(formattedTime !== ''){
-            formattedTime += ', ';
-        }
-
-        formattedTime += `${readable.minutes}m`;
-    }
-
-    return formattedTime;
-}

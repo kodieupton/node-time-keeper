@@ -6,6 +6,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "clear": "^0.1.0",
+    "cli-progress": "^3.8.2",
     "convert-seconds": "^1.0.1",
     "dotenv": "^8.2.0",
     "inquirer": "^7.3.3",
