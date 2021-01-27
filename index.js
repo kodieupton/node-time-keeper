@@ -97,8 +97,8 @@ const run = async () => {
             console.error(err);
         }
 
-        await sleep(1000);
         progress.increment();
+        await sleep(1000);
     });
 
     progress.stop();
