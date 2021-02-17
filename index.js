@@ -88,11 +88,7 @@ const run = async () => {
         try {
             await jira.addWorklog(issueNumber, duration, description, start);    
             await toggl.updateTag(togglId);
-
-            const issue = await jira.getIssue(issueNumber);
-            const hasComponents = issue.fields.components.length === 0 ? 'needs component assigned.' : '';
-
-            console.log(`${issueNumber} tracked ${convertFromSeconds(duration)} ${hasComponents}`);
+            await jira.getIssue(issueNumber);
         } catch (err) {
             console.error(err);
         }
