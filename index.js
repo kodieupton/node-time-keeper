@@ -73,7 +73,7 @@ const run = async () => {
     }));
 
     const timeEntriesToTrack = timeEntries.filter((entry) => {
-        return !dontTrack.dontTrack.includes(entry.togglId);
+        return !dontTrack.dontTrack.includes(entry.togglId) && entry.duration > 0;
     });
 
     if(timeEntriesToTrack.length === 0) {
