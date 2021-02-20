@@ -2,7 +2,8 @@ const convert = require('convert-seconds');
 
 module.exports = {
     extract: (name) => {
-        return name.match(/\w+\-\w+/)[0];
+        const matches = name.match(/\w+\-\w+/);
+        return matches ? matches[0] : '';
     },
     
     changeOffset: (dateTime) => {
