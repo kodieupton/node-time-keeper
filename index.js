@@ -84,7 +84,7 @@ const run = async () => {
 
     progress.start(timeEntriesToTrack.length, 0);
 
-    timeEntriesToTrack.forEach(async ({togglId, issueNumber, description, duration, start}) => {
+    for({togglId, issueNumber, description, duration, start} of timeEntriesToTrack) {
         try {
             await jira.addWorklog(issueNumber, duration, description, start);    
             await toggl.updateTag(togglId);
@@ -95,7 +95,7 @@ const run = async () => {
 
         progress.increment();
         await sleep(1000);
-    });
+    }
 
     progress.stop();
 };
