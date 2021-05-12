@@ -94,7 +94,9 @@ const run = async () => {
             await toggl.updateTag(togglId);
             await jira.getIssue(issueNumber);
         } catch (err) {
+            progress.stop();
             console.error(err);
+            return;
         }
 
         progress.increment();
