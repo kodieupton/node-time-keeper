@@ -26,6 +26,10 @@ const run = async () => {
         case 'week':
             togglEntries = await toggl.getCurrentWeek();
             break;
+
+        case 'lastweek':
+            togglEntries = await toggl.getLastWeek();
+            break;            
     }
 
     if(togglEntries.length === 0) {
@@ -94,7 +98,7 @@ const run = async () => {
         }
 
         progress.increment();
-        await sleep(1000);
+        await sleep(500);
     }
 
     progress.stop();
