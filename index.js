@@ -88,15 +88,33 @@ const run = async () => {
 
     progress.start(timeEntriesToTrack.length, 0);
 
+    const errors = [];
+
     for({togglId, issueNumber, description, duration, start} of timeEntriesToTrack) {
         try {
-            await jira.addWorklog(issueNumber, duration, description, start);    
+            try{
+                await jira.addWorklog(issueNumber, duration, description, start);    
+            }catch(e){
+                errors.push(issueNumber + ' ' + e.message)
+                continue;
+            }
             await toggl.updateTag(togglId);
-            await jira.getIssue(issueNumber);
+            let issue = await jira.getIssue(issueNumber);
+            let remainingEstimateSeconds = issue.fields.timetracking.remainingEstimateSeconds;
+
+            if(remainingEstimateSeconds - duration >= 0) {
+                // we are ok to update the remaining estimate
+                await jira.updateRemainingEstimateSeconds(remainingEstimateSeconds - duration);
+            }else {
+                // zero this out and alert the user
+                await jira.updateRemainingEstimateSeconds(0);
+                errors.push(issueNumber + " WARNING - Remaining Estimate is less than 0");
+            }
+
         } catch (err) {
-            progress.stop();
+            //progress.stop();
             console.error(err);
-            return;
+            //return;
         }
 
         progress.increment();
@@ -104,6 +122,9 @@ const run = async () => {
     }
 
     progress.stop();
+
+
+    errors.forEach(x => console.error(x?.toString().trim()));
 };
 
 run();
