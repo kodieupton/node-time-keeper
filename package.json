@@ -4,15 +4,15 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.4",
     "clear": "^0.1.0",
-    "cli-progress": "^3.8.2",
+    "cli-progress": "^3.12.0",
     "convert-seconds": "^1.0.1",
-    "dotenv": "^8.2.0",
-    "inquirer": "^7.3.3",
-    "jira-client": "^6.21.1",
-    "luxon": "^1.25.0",
-    "node-fetch": "^2.6.1"
+    "dotenv": "^8.6.0",
+    "inquirer": "^9.2.16",
+    "jira-client": "^6.23.0",
+    "luxon": "^1.28.1",
+    "node-fetch": "^2.7.0"
   },
   "scripts": {
     "test": "jest"
