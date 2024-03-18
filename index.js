@@ -29,7 +29,11 @@ const run = async () => {
 
         case 'lastweek':
             togglEntries = await toggl.getLastWeek();
-            break;            
+            break;  
+            
+        case 'lastmonth':
+            togglEntries = await toggl.getLastMonth();
+            break;              
     }
 
     if(togglEntries.length === 0) {
