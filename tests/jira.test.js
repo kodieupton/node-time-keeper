@@ -1,4 +1,5 @@
-const {validIssueNumber} = require('../lib/jira');
+import { expect, test } from 'vitest';
+import {validIssueNumber} from '../lib/jira';
 
 test('Valid issue number', () => {
     expect(validIssueNumber('TE-2')).toBe(true);

@@ -1,4 +1,5 @@
-const { extract, changeOffset, convertFromSeconds } = require('../util');
+import { expect, test } from 'vitest';
+import { extract, changeOffset, convertFromSeconds } from '../util';
 
 test('extract', () => {
     expect(extract('TE-2 - Testing')).toBe('TE-2');

@@ -15,7 +15,7 @@
     "node-fetch": "^2.7.0"
   },
   "scripts": {
-    "test": "jest"
+    "test": "vitest"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,6 @@
   },
   "homepage": "https://github.com/kodieupton/node-time-keeper#readme",
   "devDependencies": {
-    "jest": "^26.6.3"
+    "vitest": "^1.4.0"
   }
 }
