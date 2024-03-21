@@ -1,12 +1,13 @@
-require('dotenv').config();
+dotenv.config();
 
-const clear = require('clear');
-const jira  = require('./lib/jira');
-const toggl  = require('./lib/toggl');
-const inquirer  = require('./lib/inquirer');
-const { extract, changeOffset, convertFromSeconds, sleep } = require('./util');
-const { DateTime } = require("luxon");
-const cliProgress = require('cli-progress');
+import clear from 'clear';
+import jira from './lib/jira.js';
+import toggl from './lib/toggl.js';
+import inquirer from './lib/inquirer.js';
+import { extract, changeOffset, convertFromSeconds, sleep } from './util.js';
+import { DateTime } from "luxon";
+import cliProgress from 'cli-progress';
+import dotenv from 'dotenv';
 
 clear();
 
@@ -14,26 +15,31 @@ const run = async () => {
     let togglEntries = [];
     const whatToTrack = await inquirer.whatToTrack();
 
-    switch (whatToTrack.whatToTrack) {
-        case 'today':
-            togglEntries = await toggl.getToday();
-            break;
+    try {
+        switch (whatToTrack.whatToTrack) {
+            case 'today':
+                togglEntries = await toggl.getToday();
+                break;
 
-        case 'yesterday':
-            togglEntries = await toggl.getYesterday();
-            break;
+            case 'yesterday':
+                togglEntries = await toggl.getYesterday();
+                break;
 
-        case 'week':
-            togglEntries = await toggl.getCurrentWeek();
-            break;
+            case 'week':
+                togglEntries = await toggl.getCurrentWeek();
+                break;
 
-        case 'lastweek':
-            togglEntries = await toggl.getLastWeek();
-            break;  
-            
-        case 'lastmonth':
-            togglEntries = await toggl.getLastMonth();
-            break;              
+            case 'lastweek':
+                togglEntries = await toggl.getLastWeek();
+                break;  
+                
+            case 'lastmonth':
+                togglEntries = await toggl.getLastMonth();
+                break;              
+        }
+    } catch (err) {
+        console.error(err.message);
+        return; 
     }
 
     if(togglEntries.length === 0) {
