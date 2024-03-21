@@ -1,12 +1,13 @@
-require('dotenv').config();
+dotenv.config();
 
-const clear = require('clear');
-const jira  = require('./lib/jira');
-const toggl  = require('./lib/toggl');
-const inquirer  = require('./lib/inquirer');
-const { extract, changeOffset, convertFromSeconds, sleep } = require('./util');
-const { DateTime } = require("luxon");
-const cliProgress = require('cli-progress');
+import clear from 'clear';
+import jira from './lib/jira.js';
+import toggl from './lib/toggl.js';
+import inquirer from './lib/inquirer.js';
+import { extract, changeOffset, convertFromSeconds, sleep } from './util.js';
+import { DateTime } from "luxon";
+import cliProgress from 'cli-progress';
+import dotenv from 'dotenv';
 
 clear();
 
