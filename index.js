@@ -15,26 +15,31 @@ const run = async () => {
     let togglEntries = [];
     const whatToTrack = await inquirer.whatToTrack();
 
-    switch (whatToTrack.whatToTrack) {
-        case 'today':
-            togglEntries = await toggl.getToday();
-            break;
+    try {
+        switch (whatToTrack.whatToTrack) {
+            case 'today':
+                togglEntries = await toggl.getToday();
+                break;
 
-        case 'yesterday':
-            togglEntries = await toggl.getYesterday();
-            break;
+            case 'yesterday':
+                togglEntries = await toggl.getYesterday();
+                break;
 
-        case 'week':
-            togglEntries = await toggl.getCurrentWeek();
-            break;
+            case 'week':
+                togglEntries = await toggl.getCurrentWeek();
+                break;
 
-        case 'lastweek':
-            togglEntries = await toggl.getLastWeek();
-            break;  
-            
-        case 'lastmonth':
-            togglEntries = await toggl.getLastMonth();
-            break;              
+            case 'lastweek':
+                togglEntries = await toggl.getLastWeek();
+                break;  
+                
+            case 'lastmonth':
+                togglEntries = await toggl.getLastMonth();
+                break;              
+        }
+    } catch (err) {
+        console.error(err.message);
+        return; 
     }
 
     if(togglEntries.length === 0) {
